@@ -6,25 +6,37 @@ package com.liuxd.firstblood.constant;
  */
 
 public class Constant {
-    public static final String BASE_URL = "https://ble.litetrace.com.cn";
+    public static final String BASE_URL = "http://v.juhe.cn/";
+
     /**
      * Handler编码
      */
-    public static class HandlerCode {}
+    public static class HandlerCode {
+    }
+
     /**
      * 参数
      */
-    public static class Parameters {}
+    public static class Parameters {
+    }
+
     /**
      * Bundle参数名
      */
-    public static class BundleName {}
+    public static class BundleName {
+        public static final String CURRENT_INDEX_HOME = "current_index_home";
+        public static final String TYPE_NEWS = "type_news";
+    }
+
     /**
      * 请求码
      */
-    public static class RequestCode {}
+    public static class RequestCode {
+    }
+
     /**
      * 结果码
      */
-    public static class ResultCode {}
+    public static class ResultCode {
+    }
 }

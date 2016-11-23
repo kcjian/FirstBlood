@@ -1,0 +1,33 @@
+package com.liuxd.firstblood.ui.news;
+
+import com.liuxd.firstblood.entity.News;
+import com.liuxd.firstblood.ui.base.BasePresenter;
+
+import java.util.List;
+
+/**
+ * Created by Liuxd on 2016/11/22 11:03.
+ */
+
+public class NewsListContract {
+
+    interface View {
+        void showLoading();
+
+        void dismissLoading();
+
+        void showError();
+
+        void showEmpty();
+
+        void showNews(List<News.NewsBody> data);
+    }
+
+     interface Presenter extends BasePresenter{
+        void loadNews(String type);
+    }
+
+    interface Model {
+        void loadNews(String type);
+    }
+}

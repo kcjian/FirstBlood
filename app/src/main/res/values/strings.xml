@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">FirstBlood</string>
+    <string name="item_news">头条</string>
+    <string name="item_joke">笑话</string>
+    <string name="item_cardNo">身份证</string>
+    <string name="item_robot">机器人</string>
+
+    <string-array name="news_type">
+        <item>头条</item>
+        <item>社会</item>
+        <item>国内</item>
+        <item>国际</item>
+        <item>娱乐</item>
+        <item>体育</item>
+        <item>军事</item>
+        <item>科技</item>
+        <item>财经</item>
+        <item>时尚</item>
+    </string-array>
+    <string-array name="news_type_id">
+        <item>top</item>
+        <item>shehui</item>
+        <item>guonei</item>
+        <item>guoji</item>
+        <item>yule</item>
+        <item>tiyu</item>
+        <item>junshi</item>
+        <item>keji</item>
+        <item>caijing</item>
+        <item>shishang</item>
+    </string-array>
 </resources>

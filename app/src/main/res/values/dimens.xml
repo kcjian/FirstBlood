@@ -1,0 +1,57 @@
+<resources>
+    <!-- common -->
+    <!-- 通用 0dp -->
+    <dimen name="zero">0dp</dimen>
+    <!-- 文字 -->
+    <!-- 文字大小 120px -->
+    <dimen name="text_size_coupon">40sp</dimen>
+    <dimen name="text_size_larger">24sp</dimen>
+    <!-- 文字大小 48px -->
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_title">16sp</dimen>
+    <!-- 文字大小 42px -->
+    <dimen name="text_size_big">16sp</dimen>
+    <!-- 文字大小 36px 最常使用文字大小-->
+    <dimen name="text_size_normal">14sp</dimen>
+    <!-- 文字大小 30px -->
+    <dimen name="text_size_small">12sp</dimen>
+    <!-- 文字大小 28px -->
+    <dimen name="text_size_smaller">9.33sp</dimen>
+    <!-- 文字大小 24px -->
+    <dimen name="text_size_tiny">8sp</dimen>
+
+    <!--padding-->
+    <dimen name="dialog_bg_padding">10dp</dimen>
+    <dimen name="dialog_tv_padding">20dp</dimen>
+    <dimen name="padding_coupon">56dp</dimen>
+    <dimen name="padding_large">30dp</dimen>
+    <dimen name="padding_big">20dp</dimen>
+    <dimen name="padding_normal">15dp</dimen>
+    <dimen name="padding_small">10dp</dimen>
+    <dimen name="padding_smaller">8dp</dimen>
+    <dimen name="padding_tiny">5dp</dimen>
+
+    <!--margin-->
+    <dimen name="margin_coupon">56dp</dimen>
+    <dimen name="margin_larger">35dp</dimen>
+    <dimen name="margin_large">30dp</dimen>
+    <dimen name="margin_big">20dp</dimen>
+    <dimen name="margin_normal">15dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_smaller">8dp</dimen>
+    <dimen name="margin_tiny">5dp</dimen>
+
+    <dimen name="loading_side">40dp</dimen>
+    <dimen name="logo_size">140dp</dimen>
+    <dimen name="ring_width_thin">1dp</dimen>
+    <dimen name="ring_size">100dp</dimen>
+    <dimen name="ring_main1_size">280dp</dimen>
+    <dimen name="ring_main2_size">190dp</dimen>
+    <dimen name="ring_btn_size">70dp</dimen>
+    <dimen name="ring_btn_marT">250dp</dimen>
+    <dimen name="ring_btn_marT2">180dp</dimen>
+    <dimen name="ring_btn_marL">120dp</dimen>
+    <dimen name="circleView_size">45dp</dimen>
+    <dimen name="size_tv_brightness">90dp</dimen>
+    <dimen name="size_item_scene_border">1dp</dimen>
+</resources>

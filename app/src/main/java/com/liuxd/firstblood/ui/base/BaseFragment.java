@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 
 import com.liuxd.firstblood.util.LogUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -23,8 +26,9 @@ import butterknife.Unbinder;
  * 集合了ButterKnife、沉浸式状态栏、侧滑返回、activity栈管理以及一些常用的方法
  */
 
-public abstract class BaseFragment extends Fragment implements IBase {
+public abstract class BaseFragment extends Fragment implements IBase, BaseView {
     private View mRootView;
+    private List<View> mViews;
     private boolean isVisible;
     private boolean isPrepared;
     private boolean isFirst = true;
@@ -68,8 +72,10 @@ public abstract class BaseFragment extends Fragment implements IBase {
             }
         }
         mRootView = inflater.inflate(setLayoutId(), null);
+        mViews=new ArrayList<>();
+        mViews.add(mRootView);
         mUnbinder = ButterKnife.bind(this, mRootView);
-        init();
+        init(savedInstanceState);
         return mRootView;
     }
 
@@ -117,11 +123,11 @@ public abstract class BaseFragment extends Fragment implements IBase {
     /**
      * 懒加载
      */
-    protected void lazyLoad() {
+    private void lazyLoad() {
         if (!isPrepared || !isVisible || !isFirst) {
             return;
         }
-//        lazyRequest();
+        lazyRequest();
         isFirst = false;
     }
 
@@ -133,7 +139,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
     /**
      * 这里获取数据，刷新界面
      */
-//    protected abstract void lazyRequest();
+    public  void lazyRequest(){};
     @Override
     public void onPause() {
         super.onPause();
@@ -163,5 +169,25 @@ public abstract class BaseFragment extends Fragment implements IBase {
     public void onDetach() {
         super.onDetach();
         LogUtil.d(TAG, "onDetach");
+    }
+
+    @Override
+    public void showLoading() {
+//View view=LayoutInflater.from()
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.liuxd.firstblood.util.LogUtil;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by Liuxd on 2016/11/19 13:20.

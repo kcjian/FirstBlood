@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorStatusBar">#FF4081</color>
+    <color name="colorPrimary">#FF3333</color>
+    <color name="colorPrimaryDark">#CC3333</color>
+    <color name="colorAccent">#FF3300</color>
+    <color name="colorStatusBar">@color/colorPrimaryDark</color>
+    <color name="nav_bg">#FFEDEDED</color>
+    <color name="item_color">@color/colorPrimary</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="color_text_black">#CC000000</color>
+    <color name="color_text_gray">#BB000000</color>
+    <color name="divider">#40000000</color>
 </resources>

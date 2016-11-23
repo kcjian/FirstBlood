@@ -51,7 +51,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             });
         }
         //设置长按事件
-        if (mOnItemLongClickListener == null) {
+        if (mOnItemLongClickListener != null) {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

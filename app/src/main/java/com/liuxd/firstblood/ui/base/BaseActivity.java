@@ -16,6 +16,7 @@ import com.liuxd.firstblood.util.ToastUtil;
 
 import butterknife.BindColor;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Liuxd on 2016/11/21 10:41.
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity implements IBase {
     @BindColor(R.color.colorStatusBar)
     int statusBarColor;
-
+    Unbinder mUnbinder;
     public final String TAG = this.getClass().getSimpleName();
 
     @Override
@@ -36,12 +37,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
         super.onCreate(savedInstanceState);
         LogUtil.d(TAG, "onCreate");
         setContentView(setLayoutId());//设置布局文件
-        ButterKnife.bind(this);//奶油刀绑定布局
+        mUnbinder = ButterKnife.bind(this);//奶油刀绑定布局
         setStatusBarColor(statusBarColor, 0);//设置状态栏颜色
 //        initSlidrConfig();//初始化滑动返回
         AppManager.getInstance().addActivity(this);
         initToolBar();
-        init();//一些初始化操作
+        init(savedInstanceState);//一些初始化操作
     }
 
     private void initToolBar() {
@@ -126,6 +127,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getInstance().removeActivity(this);
+        mUnbinder.unbind();
         LogUtil.d(TAG, "onDestroy");
     }
 }

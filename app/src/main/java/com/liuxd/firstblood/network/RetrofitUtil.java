@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 封装retrofit+okHttp
  */
 
-public class HttpUtils {
+public  class RetrofitUtil {
     private ApiService mApiService;
 
     private static final int CONNECT_TIMEOUT = 10;
@@ -31,7 +31,7 @@ public class HttpUtils {
     private static final File CACHE_PATH = MyApp.getInstance().getCacheDir();
     private static final int MAX_CACHE_SIZE = 20 * 1024 * 1024;
 
-    private HttpUtils() {
+    public RetrofitUtil() {
         LogUtil.d("初始化retrofit:", CACHE_PATH.getAbsolutePath());
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -55,13 +55,4 @@ public class HttpUtils {
     public ApiService getApiService() {
         return mApiService;
     }
-
-    private static class HttpUtilsSingleton {
-        private static final HttpUtils INSTANCE = new HttpUtils();
-    }
-
-    public static HttpUtils getInstance() {
-        return HttpUtilsSingleton.INSTANCE;
-    }
-
 }
