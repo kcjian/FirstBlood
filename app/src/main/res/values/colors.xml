@@ -6,6 +6,7 @@
     <color name="colorStatusBar">@color/colorPrimaryDark</color>
     <color name="nav_bg">#FFEDEDED</color>
     <color name="item_color">@color/colorPrimary</color>
+    <color name="item_color_normal">@color/black</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>

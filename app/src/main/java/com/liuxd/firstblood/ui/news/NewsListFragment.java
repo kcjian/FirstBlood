@@ -11,7 +11,7 @@ import com.liuxd.firstblood.entity.News;
 import com.liuxd.firstblood.ui.base.BaseAdapter;
 import com.liuxd.firstblood.ui.base.BaseFragment;
 import com.liuxd.firstblood.ui.base.BaseViewHolder;
-import com.liuxd.firstblood.view.SpacesItemDecoration;
+import com.liuxd.firstblood.widget.view.SpacesItemDecoration;
 
 import java.util.List;
 

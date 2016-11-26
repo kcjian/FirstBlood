@@ -1,4 +1,4 @@
-package com.liuxd.firstblood.view;
+package com.liuxd.firstblood.widget;
 
 import android.view.View;
 

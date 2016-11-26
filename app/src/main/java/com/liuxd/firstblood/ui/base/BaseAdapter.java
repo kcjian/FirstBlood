@@ -1,9 +1,13 @@
 package com.liuxd.firstblood.ui.base;
 
+import android.animation.Animator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+
+import com.liuxd.firstblood.widget.ScaleInAnimation;
 
 import java.util.List;
 
@@ -20,6 +24,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private int mLayoutId;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
+    private ScaleInAnimation mScaleInAnimation = new ScaleInAnimation();
+    private LinearInterpolator mInterpolator = new LinearInterpolator();
 
     /**
      * @param datas    数据源
@@ -39,6 +45,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     @Override
     public void onBindViewHolder(final BaseViewHolder holder, int position) {
         convert(holder, mDatas.get(position));
+        addAnimation(holder);
         //设置点击事件
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             this.mDatas = datas;
         }
         notifyDataSetChanged();
+    }
+
+    private void addAnimation(BaseViewHolder holder) {
+        Animator[] animators = this.mScaleInAnimation.getAnimators(holder.itemView);
+        for (int i = 0; i < animators.length; i++) {
+            Animator anim = animators[i];
+            anim.setDuration(100L).start();
+            anim.setInterpolator(mInterpolator);
+        }
+
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

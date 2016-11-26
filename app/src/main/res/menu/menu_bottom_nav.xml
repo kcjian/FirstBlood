@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_news"
-        android:icon="@drawable/ic_tab_news_24dp"
+        android:icon="@drawable/ic_tab_news_normal"
         android:title="@string/item_news"/>
     <item
         android:id="@+id/item_joke"
-        android:icon="@drawable/ic_tab_joke_24dp"
+        android:icon="@drawable/ic_tab_joke_normal"
         android:title="@string/item_joke"/>
     <item
         android:id="@+id/item_cardNo"
-        android:icon="@drawable/ic_tab_card_no_24dp"
+        android:icon="@drawable/ic_tab_card_no_normal"
         android:title="@string/item_cardNo"/>
     <item
         android:id="@+id/item_robot"
-        android:icon="@drawable/ic_tab_robot_24dp"
+        android:icon="@drawable/ic_tab_robot_normal"
         android:title="@string/item_robot"/>
 </menu>

@@ -1,13 +1,11 @@
 package com.liuxd.firstblood.ui.home;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
-import android.view.MenuItem;
+import android.widget.RadioGroup;
 
 import com.liuxd.firstblood.R;
 import com.liuxd.firstblood.constant.Constant;
@@ -15,6 +13,7 @@ import com.liuxd.firstblood.ui.base.BaseActivity;
 import com.liuxd.firstblood.ui.base.BaseFragment;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 
 /**
  * Created by Liuxd on 2016/11/21 11:24.
@@ -22,11 +21,13 @@ import butterknife.BindView;
  */
 
 public class HomeActivity extends BaseActivity {
+    @BindView(R.id.rg_home)
+    RadioGroup mRgHome;
 
-    @BindView(R.id.bottom_nav)
-    BottomNavigationView mBottomNav;
+//    @BindView(R.id.bottom_nav)
+//    BottomNavigationView mBottomNav;
 
-    private MenuItem mLastItem;
+    //    private MenuItem mLastItem;
     private SparseArray<BaseFragment> fragments;
     private FragmentManager manager;
     private int currentIndex = 0;
@@ -39,33 +40,33 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
         initFragments();
-        mBottomNav.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        if (mLastItem != item) {
-                            mLastItem = item;
-                            switch (item.getItemId()) {
-                                case R.id.item_news:
-                                    showFragment(0);
-                                    break;
-                                case R.id.item_joke:
-                                    showFragment(1);
-                                    break;
-                                case R.id.item_cardNo:
-                                    showFragment(2);
-                                    break;
-                                case R.id.item_robot:
-                                    showFragment(3);
-                                    break;
-                            }
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-        );
+//        mBottomNav.setOnNavigationItemSelectedListener(
+//                new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                        if (mLastItem != item) {
+//                            mLastItem = item;
+//                            switch (item.getItemId()) {
+//                                case R.id.item_news:
+//                                    showFragment(0);
+//                                    break;
+//                                case R.id.item_joke:
+//                                    showFragment(1);
+//                                    break;
+//                                case R.id.item_cardNo:
+//                                    showFragment(2);
+//                                    break;
+//                                case R.id.item_robot:
+//                                    showFragment(3);
+//                                    break;
+//                            }
+//                            return true;
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                }
+//        );
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(Constant.BundleName.CURRENT_INDEX_HOME, 0);
         }
@@ -103,5 +104,25 @@ public class HomeActivity extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(Constant.BundleName.CURRENT_INDEX_HOME, currentIndex);
+    }
+
+    @OnCheckedChanged(R.id.rg_home)
+    public void onChecked(boolean checked) {
+        if (checked) {
+            switch (mRgHome.getCheckedRadioButtonId()) {
+                case R.id.rb_news:
+                    showFragment(0);
+                    break;
+                case R.id.rb_joke:
+                    showFragment(1);
+                    break;
+                case R.id.rb_cardNo:
+                    showFragment(2);
+                    break;
+                case R.id.rb_robot:
+                    showFragment(3);
+                    break;
+            }
+        }
     }
 }
