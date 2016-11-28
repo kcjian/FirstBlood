@@ -6,14 +6,16 @@
               android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_dataEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有数据"/>
+        android:text="@string/data_empty"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_load"
+        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="加载加载"/>
+        android:layout_marginTop="@dimen/margin_small"
+        android:text="@string/data_load"/>
 </LinearLayout>

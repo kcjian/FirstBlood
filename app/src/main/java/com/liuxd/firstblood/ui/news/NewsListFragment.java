@@ -1,9 +1,15 @@
 package com.liuxd.firstblood.ui.news;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.liuxd.firstblood.R;
 import com.liuxd.firstblood.constant.Constant;
@@ -16,6 +22,7 @@ import com.liuxd.firstblood.widget.view.SpacesItemDecoration;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Liuxd on 2016/11/21 16:41.
@@ -26,6 +33,10 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     @BindView(R.id.rv_news)
     RecyclerView mRvNews;
+    @BindView(R.id.srl_news)
+    SwipeRefreshLayout mSrlNews;
+    @BindView(R.id.layout_loadMore)
+    LinearLayout mLayoutLoadMore;
 
     private BaseAdapter<News.NewsBody> mAdapter;
 
@@ -49,6 +60,9 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
+        mLayoutLoadMore.setVisibility(View.GONE);
+        mSrlNews.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
+        mPresenter = new NewsListPresenter(this);
         mAdapter = new BaseAdapter<News.NewsBody>(null, R.layout.item_news) {
             @Override
             public void convert(BaseViewHolder holder, News.NewsBody data) {
@@ -68,7 +82,18 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     @Override
     public void lazyRequest() {
         super.lazyRequest();
-        mPresenter = new NewsListPresenter(this);
+        mSrlNews.post(new Runnable() {
+            @Override
+            public void run() {
+                mSrlNews.setRefreshing(true);
+            }
+        });
+        mSrlNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadNews(getArguments().getString(Constant.BundleName.TYPE_NEWS));
+            }
+        });
         mPresenter.loadNews(getArguments().getString(Constant.BundleName.TYPE_NEWS));
     }
 
@@ -79,17 +104,17 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     @Override
     public void dismissLoading() {
-
+        mSrlNews.setRefreshing(false);
     }
 
     @Override
     public void showError() {
-
+        mSrlNews.setRefreshing(false);
     }
 
     @Override
     public void showEmpty() {
-
+        mSrlNews.setRefreshing(false);
     }
 
     @Override
@@ -97,4 +122,11 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
         mAdapter.setDatas(data, false);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 }

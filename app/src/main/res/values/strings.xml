@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">FirstBlood</string>
+    <!--首页-->
     <string name="item_news">头条</string>
     <string name="item_joke">笑话</string>
     <string name="item_cardNo">身份证</string>
     <string name="item_robot">机器人</string>
-
+    <!--新闻-->
     <string-array name="news_type">
         <item>头条</item>
         <item>社会</item>
@@ -29,4 +30,10 @@
         <item>caijing</item>
         <item>shishang</item>
     </string-array>
+    <!--other-->
+    <string name="loading">拼命加载中&#8230;</string>
+    <string name="load_error">网络请求失败</string>
+    <string name="data_empty">还没有任何数据，空空的</string>
+    <string name="data_load">来一波</string>
+    <string name="retry">点击重试</string>
 </resources>

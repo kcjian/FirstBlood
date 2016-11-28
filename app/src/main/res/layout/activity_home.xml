@@ -42,18 +42,18 @@
             android:id="@+id/rb_joke"
             style="@style/style_tab"
             android:drawableTop="@drawable/selector_tab_joke"
-            android:text="@string/item_news"/>
+            android:text="@string/item_joke"/>
 
         <RadioButton
             android:id="@+id/rb_cardNo"
             style="@style/style_tab"
             android:drawableTop="@drawable/selector_tab_card_no"
-            android:text="@string/item_news"/>
+            android:text="@string/item_cardNo"/>
 
         <RadioButton
             android:id="@+id/rb_robot"
             style="@style/style_tab"
             android:drawableTop="@drawable/selector_tab_robot"
-            android:text="@string/item_news"/>
+            android:text="@string/item_robot"/>
     </RadioGroup>
 </LinearLayout>

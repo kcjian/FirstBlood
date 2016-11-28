@@ -13,7 +13,6 @@ import com.liuxd.firstblood.ui.base.BaseActivity;
 import com.liuxd.firstblood.ui.base.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
 
 /**
  * Created by Liuxd on 2016/11/21 11:24.
@@ -71,6 +70,25 @@ public class HomeActivity extends BaseActivity {
             currentIndex = savedInstanceState.getInt(Constant.BundleName.CURRENT_INDEX_HOME, 0);
         }
         showFragment(currentIndex);
+        mRgHome.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_news:
+                        showFragment(0);
+                        break;
+                    case R.id.rb_joke:
+                        showFragment(1);
+                        break;
+                    case R.id.rb_cardNo:
+                        showFragment(2);
+                        break;
+                    case R.id.rb_robot:
+                        showFragment(3);
+                        break;
+                }
+            }
+        });
     }
 
     private void initFragments() {
@@ -106,23 +124,4 @@ public class HomeActivity extends BaseActivity {
         outState.putInt(Constant.BundleName.CURRENT_INDEX_HOME, currentIndex);
     }
 
-    @OnCheckedChanged(R.id.rg_home)
-    public void onChecked(boolean checked) {
-        if (checked) {
-            switch (mRgHome.getCheckedRadioButtonId()) {
-                case R.id.rb_news:
-                    showFragment(0);
-                    break;
-                case R.id.rb_joke:
-                    showFragment(1);
-                    break;
-                case R.id.rb_cardNo:
-                    showFragment(2);
-                    break;
-                case R.id.rb_robot:
-                    showFragment(3);
-                    break;
-            }
-        }
-    }
 }

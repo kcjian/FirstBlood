@@ -42,7 +42,7 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
         initFragments();
-        mAdapter = new CommonPagerAdapter<NewsListFragment>(getChildFragmentManager(), fragments, mTypes);
+        mAdapter = new CommonPagerAdapter<>(getChildFragmentManager(), fragments, mTypes);
         mVpNews.setOffscreenPageLimit(3);
         mVpNews.setAdapter(mAdapter);
         mTabNewsType.setupWithViewPager(mVpNews);
@@ -50,8 +50,8 @@ public class NewsFragment extends BaseFragment {
 
     private void initFragments() {
         fragments = new ArrayList<>();
-        for (int i = 0; i < mTypeIds.length; i++) {
-            fragments.add(NewsListFragment.createInstance(mTypeIds[i]));
+        for (String mTypeId : mTypeIds) {
+            fragments.add(NewsListFragment.createInstance(mTypeId));
         }
     }
 
