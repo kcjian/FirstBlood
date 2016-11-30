@@ -31,7 +31,6 @@ public class NewsFragment extends BaseFragment {
     @BindArray(R.array.news_type_id)
     String[] mTypeIds;
 
-    private CommonPagerAdapter<NewsListFragment> mAdapter;
     private List<NewsListFragment> fragments;
 
     @Override
@@ -42,9 +41,10 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
         initFragments();
-        mAdapter = new CommonPagerAdapter<>(getChildFragmentManager(), fragments, mTypes);
+        CommonPagerAdapter<NewsListFragment> adapter = new CommonPagerAdapter<>(
+                getChildFragmentManager(), fragments, mTypes);
         mVpNews.setOffscreenPageLimit(3);
-        mVpNews.setAdapter(mAdapter);
+        mVpNews.setAdapter(adapter);
         mTabNewsType.setupWithViewPager(mVpNews);
     }
 

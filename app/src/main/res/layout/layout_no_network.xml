@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/noNetworkViewLayout"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center"
               android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_errorMsg"
+        android:id="@+id/tv_dataEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/load_error"/>
+        android:text="@string/no_network"/>
 
     <Button
-        android:id="@+id/btn_retry"
-        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+        android:id="@+id/btn_setNetWork"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:layout_marginTop="@dimen/margin_small"
-        android:text="@string/retry"/>
+        android:text="@string/set_network"/>
 </LinearLayout>

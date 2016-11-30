@@ -1,8 +1,12 @@
 package com.liuxd.firstblood.util;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
+
+import com.liuxd.firstblood.MyApp;
 
 /**
  * Created by Liuxd on 2016/10/27 16:08.
@@ -31,5 +35,14 @@ public class DeviceUtil {
         } else {
             return manufacturer + "_" + model + "_" + sdk_int;
         }
+    }
+
+    /**
+     * @return 网络是否可用
+     */
+    public static boolean isNetworkAvailable() {
+        ConnectivityManager manager = (ConnectivityManager) MyApp.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return info != null && info.isAvailable();
     }
 }

@@ -5,7 +5,7 @@ package com.liuxd.firstblood.ui.base;
  */
 
 public interface BasePresenter {
-    void attachView();
+    void onStart();
 
-    void detachView();
+    void onDestroy();
 }

@@ -83,6 +83,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         notifyDataSetChanged();
     }
 
+    public List<T> getDatas() {
+        return mDatas;
+    }
+
     private void addAnimation(BaseViewHolder holder) {
         Animator[] animators = this.mScaleInAnimation.getAnimators(holder.itemView);
         for (int i = 0; i < animators.length; i++) {

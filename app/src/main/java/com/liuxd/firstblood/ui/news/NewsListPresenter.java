@@ -1,9 +1,11 @@
 package com.liuxd.firstblood.ui.news;
 
 import com.liuxd.firstblood.entity.News;
+import com.liuxd.firstblood.util.DeviceUtil;
 
 /**
  * Created by Liuxd on 2016/11/22 11:01.
+ * 新闻列表 Presenter，负责调度 view 和 model
  */
 
 public class NewsListPresenter implements NewsListContract.Presenter, OnDataLoadListener<News> {
@@ -17,33 +19,37 @@ public class NewsListPresenter implements NewsListContract.Presenter, OnDataLoad
 
     @Override
     public void loadNews(String type) {
-        mView.showLoading();
         mModel.loadNews(type);
     }
 
     @Override
     public void onFailed(Throwable throwable) {
-        mView.dismissLoading();
-        mView.showError();
+        if (!DeviceUtil.isNetworkAvailable()) {
+            mView.showNoNetwork();
+        } else {
+            mView.showError();
+        }
     }
 
     @Override
     public void onSuccess(News data) {
-        mView.dismissLoading();
         if (data.getData().size() == 0) {
             mView.showEmpty();
         } else {
+            mView.hideLoading();
             mView.showNews(data.getData());
         }
     }
 
     @Override
-    public void attachView() {
+    public void onStart() {
 
     }
 
     @Override
-    public void detachView() {
+    public void onDestroy() {
+        if (mModel != null)
+            mModel.unSubscribe();
         if (mView != null)
             mView = null;
     }

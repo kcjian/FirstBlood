@@ -9,6 +9,7 @@
     <color name="item_color_normal">@color/black</color>
 
     <color name="white">#FFFFFFFF</color>
+    <color name="white_light">#80FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="transparent">#00000000</color>
     <color name="color_text_black">#CC000000</color>

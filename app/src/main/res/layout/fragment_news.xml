@@ -14,7 +14,7 @@
         asura:tabIndicatorColor="@color/white"
         asura:tabMode="scrollable"
         asura:tabSelectedTextColor="@color/white"
-        asura:tabTextColor="@color/color_text_black"/>
+        asura:tabTextColor="@color/white_light"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_news"

@@ -35,5 +35,7 @@
     <string name="load_error">网络请求失败</string>
     <string name="data_empty">还没有任何数据，空空的</string>
     <string name="data_load">来一波</string>
+    <string name="no_network">没网啊小伙，在山区耍猴吗？</string>
+    <string name="set_network">设置网络</string>
     <string name="retry">点击重试</string>
 </resources>

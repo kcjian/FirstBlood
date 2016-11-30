@@ -7,9 +7,11 @@ package com.liuxd.firstblood.ui.base;
 public interface BaseView {
     void showLoading();
 
-    void dismissLoading();
+    void hideLoading();
 
     void showError();
 
     void showEmpty();
+
+    void showNoNetwork();
 }

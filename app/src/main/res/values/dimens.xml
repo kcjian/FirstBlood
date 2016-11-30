@@ -54,4 +54,6 @@
     <dimen name="circleView_size">45dp</dimen>
     <dimen name="size_tv_brightness">90dp</dimen>
     <dimen name="size_item_scene_border">1dp</dimen>
+
+    <dimen name="app_bar_height">180dp</dimen>
 </resources>

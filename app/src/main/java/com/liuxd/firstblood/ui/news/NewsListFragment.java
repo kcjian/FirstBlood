@@ -1,14 +1,15 @@
 package com.liuxd.firstblood.ui.news;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.liuxd.firstblood.R;
@@ -17,19 +18,20 @@ import com.liuxd.firstblood.entity.News;
 import com.liuxd.firstblood.ui.base.BaseAdapter;
 import com.liuxd.firstblood.ui.base.BaseFragment;
 import com.liuxd.firstblood.ui.base.BaseViewHolder;
+import com.liuxd.firstblood.widget.view.MultiStatusView;
 import com.liuxd.firstblood.widget.view.SpacesItemDecoration;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Liuxd on 2016/11/21 16:41.
  * 新闻列表
  */
 
-public class NewsListFragment extends BaseFragment implements NewsListContract.View {
+public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
+        NewsListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.rv_news)
     RecyclerView mRvNews;
@@ -37,10 +39,10 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     SwipeRefreshLayout mSrlNews;
     @BindView(R.id.layout_loadMore)
     LinearLayout mLayoutLoadMore;
+    @BindView(R.id.multiStatusView)
+    MultiStatusView mMultiStatusView;
 
     private BaseAdapter<News.NewsBody> mAdapter;
-
-    private NewsListPresenter mPresenter;
 
     public NewsListFragment() {
     }
@@ -60,60 +62,77 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
 
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
-        mLayoutLoadMore.setVisibility(View.GONE);
-        mSrlNews.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         mPresenter = new NewsListPresenter(this);
+        mLayoutLoadMore.setVisibility(View.GONE);
+        mMultiStatusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRefresh();
+            }
+        });
+        mSrlNews.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
+        mSrlNews.setOnRefreshListener(this);
+        initRecyclerView();
+        onRefresh();
+    }
+
+    private void initRecyclerView() {
         mAdapter = new BaseAdapter<News.NewsBody>(null, R.layout.item_news) {
             @Override
             public void convert(BaseViewHolder holder, News.NewsBody data) {
                 holder.setText(R.id.tv_title, data.getTitle());
                 holder.setImageSrc(R.id.iv_thumbPic1, data.getThumbPic1());
-//                holder.setImageSrc(R.id.iv_thumbPic2, data.getThumbPic2());
-//                holder.setImageSrc(R.id.iv_thumbPic3, data.getThumbPic3());
                 holder.setText(R.id.tv_authorName, data.getAuthorName());
                 holder.setText(R.id.tv_date, data.getDate());
             }
         };
+        mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClickListener(View v, int position) {
+                Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
+                intent.putExtra("url", mAdapter.getDatas().get(position).getUrl());
+                intent.putExtra("imageUrl", mAdapter.getDatas().get(position).getThumbPic1());
+                intent.putExtra("title", mAdapter.getDatas().get(position).getTitle());
+
+                View transitionView = v.findViewById(R.id.iv_thumbPic1);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                transitionView, "transition_news_img");
+
+                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+            }
+        });
         mRvNews.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRvNews.addItemDecoration(new SpacesItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
         mRvNews.setAdapter(mAdapter);
     }
 
     @Override
-    public void lazyRequest() {
-        super.lazyRequest();
-        mSrlNews.post(new Runnable() {
-            @Override
-            public void run() {
-                mSrlNews.setRefreshing(true);
-            }
-        });
-        mSrlNews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.loadNews(getArguments().getString(Constant.BundleName.TYPE_NEWS));
-            }
-        });
-        mPresenter.loadNews(getArguments().getString(Constant.BundleName.TYPE_NEWS));
-    }
-
-    @Override
     public void showLoading() {
-
+        mMultiStatusView.showLoading();
     }
 
     @Override
-    public void dismissLoading() {
+    public void hideLoading() {
+        mMultiStatusView.showContent();
         mSrlNews.setRefreshing(false);
     }
 
     @Override
     public void showError() {
+        mMultiStatusView.showError();
         mSrlNews.setRefreshing(false);
     }
 
     @Override
     public void showEmpty() {
+        mMultiStatusView.showEmpty();
+        mSrlNews.setRefreshing(false);
+    }
+
+    @Override
+    public void showNoNetwork() {
+        mMultiStatusView.showNoNetwork();
         mSrlNews.setRefreshing(false);
     }
 
@@ -123,10 +142,7 @@ public class NewsListFragment extends BaseFragment implements NewsListContract.V
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onRefresh() {
+        mPresenter.loadNews(getArguments().getString(Constant.BundleName.TYPE_NEWS));
     }
 }

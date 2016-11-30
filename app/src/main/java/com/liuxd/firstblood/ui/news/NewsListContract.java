@@ -1,7 +1,9 @@
 package com.liuxd.firstblood.ui.news;
 
 import com.liuxd.firstblood.entity.News;
+import com.liuxd.firstblood.ui.base.BaseModel;
 import com.liuxd.firstblood.ui.base.BasePresenter;
+import com.liuxd.firstblood.ui.base.BaseView;
 
 import java.util.List;
 
@@ -11,15 +13,7 @@ import java.util.List;
 
 public class NewsListContract {
 
-    interface View {
-        void showLoading();
-
-        void dismissLoading();
-
-        void showError();
-
-        void showEmpty();
-
+    interface View extends BaseView{
         void showNews(List<News.NewsBody> data);
     }
 
@@ -27,7 +21,7 @@ public class NewsListContract {
         void loadNews(String type);
     }
 
-    interface Model {
+    interface Model extends BaseModel {
         void loadNews(String type);
     }
 }

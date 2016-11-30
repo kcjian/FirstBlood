@@ -2,6 +2,7 @@ package com.liuxd.firstblood.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.liuxd.firstblood.BuildConfig;
 import com.liuxd.firstblood.MyApp;
 import com.liuxd.firstblood.constant.Constant;
 import com.liuxd.firstblood.util.LogUtil;
@@ -23,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 封装retrofit+okHttp
  */
 
-public  class RetrofitUtil {
+public class RetrofitUtil {
     private ApiService mApiService;
 
     private static final int CONNECT_TIMEOUT = 10;
@@ -34,7 +35,8 @@ public  class RetrofitUtil {
     public RetrofitUtil() {
         LogUtil.d("初始化retrofit:", CACHE_PATH.getAbsolutePath());
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(BuildConfig.LOG_ENABLE
+                        ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE))
                 .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .cache(new Cache(CACHE_PATH, MAX_CACHE_SIZE));

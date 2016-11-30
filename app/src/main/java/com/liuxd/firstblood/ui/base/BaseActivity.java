@@ -17,6 +17,8 @@ import com.liuxd.firstblood.util.ToastUtil;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscriber;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Liuxd on 2016/11/21 10:41.
@@ -31,6 +33,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     int statusBarColor;
     Unbinder mUnbinder;
     public final String TAG = this.getClass().getSimpleName();
+    private CompositeSubscription mCompositeSubscription;
+
+    private void addCompositeSubscription(Subscriber subscriber) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscriber);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,6 +138,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
         super.onDestroy();
         AppManager.getInstance().removeActivity(this);
         mUnbinder.unbind();
+        if (mCompositeSubscription != null)
+            mCompositeSubscription.unsubscribe();
         LogUtil.d(TAG, "onDestroy");
     }
 }

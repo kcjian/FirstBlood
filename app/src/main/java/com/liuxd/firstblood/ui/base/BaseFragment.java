@@ -12,11 +12,10 @@ import android.view.ViewGroup;
 
 import com.liuxd.firstblood.util.LogUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscriber;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Liuxd on 2016/11/14 18:38.
@@ -26,14 +25,19 @@ import butterknife.Unbinder;
  * 集合了ButterKnife、沉浸式状态栏、侧滑返回、activity栈管理以及一些常用的方法
  */
 
-public abstract class BaseFragment extends Fragment implements IBase, BaseView {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBase {
     private View mRootView;
-    private List<View> mViews;
-    private boolean isVisible;
-    private boolean isPrepared;
-    private boolean isFirst = true;
     private Unbinder mUnbinder;
     private final String TAG = this.getClass().getSimpleName();
+    private CompositeSubscription mCompositeSubscription;
+    protected P mPresenter;
+
+    private void addCompositeSubscription(Subscriber subscriber) {
+        if (mCompositeSubscription == null) {
+            mCompositeSubscription = new CompositeSubscription();
+        }
+        mCompositeSubscription.add(subscriber);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -72,10 +76,10 @@ public abstract class BaseFragment extends Fragment implements IBase, BaseView {
             }
         }
         mRootView = inflater.inflate(setLayoutId(), null);
-        mViews=new ArrayList<>();
-        mViews.add(mRootView);
         mUnbinder = ButterKnife.bind(this, mRootView);
         init(savedInstanceState);
+        if (mPresenter != null)
+            mPresenter.onStart();
         return mRootView;
     }
 
@@ -89,20 +93,6 @@ public abstract class BaseFragment extends Fragment implements IBase, BaseView {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LogUtil.d(TAG, "onActivityCreated");
-        isPrepared = true;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        LogUtil.d(TAG, "setUserVisibleHint");
-        if (getUserVisibleHint()) {
-            isVisible = true;
-            lazyLoad();
-        } else {
-            isVisible = false;
-//            onInvisible();
-        }
     }
 
     @Override
@@ -120,26 +110,6 @@ public abstract class BaseFragment extends Fragment implements IBase, BaseView {
         }
     }
 
-    /**
-     * 懒加载
-     */
-    private void lazyLoad() {
-        if (!isPrepared || !isVisible || !isFirst) {
-            return;
-        }
-        lazyRequest();
-        isFirst = false;
-    }
-
-    /**
-     * fragment被设置为不可见时调用
-     */
-//    protected abstract void onInvisible();
-
-    /**
-     * 这里获取数据，刷新界面
-     */
-    public  void lazyRequest(){};
     @Override
     public void onPause() {
         super.onPause();
@@ -156,7 +126,12 @@ public abstract class BaseFragment extends Fragment implements IBase, BaseView {
     public void onDestroyView() {
         super.onDestroyView();
         LogUtil.d(TAG, "onDestroyView");
-        mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
+        if (mPresenter != null)
+            mPresenter.onDestroy();
+        if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions())
+            mCompositeSubscription.unsubscribe();
     }
 
     @Override
@@ -169,25 +144,5 @@ public abstract class BaseFragment extends Fragment implements IBase, BaseView {
     public void onDetach() {
         super.onDetach();
         LogUtil.d(TAG, "onDetach");
-    }
-
-    @Override
-    public void showLoading() {
-//View view=LayoutInflater.from()
-    }
-
-    @Override
-    public void dismissLoading() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
     }
 }
