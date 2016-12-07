@@ -90,14 +90,14 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
             @Override
             public void onItemClickListener(View v, int position) {
                 Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
-                intent.putExtra("url", mAdapter.getDatas().get(position).getUrl());
-                intent.putExtra("imageUrl", mAdapter.getDatas().get(position).getThumbPic1());
-                intent.putExtra("title", mAdapter.getDatas().get(position).getTitle());
+                intent.putExtra(Constant.BundleName.URL_NEWS, mAdapter.getDatas().get(position).getUrl());
+                intent.putExtra(Constant.BundleName.URL_IMAGE_NEWS, mAdapter.getDatas().get(position).getThumbPic1());
+                intent.putExtra(Constant.BundleName.TITLE_NEWS, mAdapter.getDatas().get(position).getTitle());
 
                 View transitionView = v.findViewById(R.id.iv_thumbPic1);
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                                transitionView, "transition_news_img");
+                                transitionView, Constant.Parameters.TRANSITION_NEWS_IMG);
 
                 ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
             }

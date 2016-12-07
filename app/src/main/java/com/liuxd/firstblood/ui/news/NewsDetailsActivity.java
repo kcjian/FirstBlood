@@ -5,12 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.liuxd.firstblood.R;
+import com.liuxd.firstblood.constant.Constant;
 import com.liuxd.firstblood.ui.base.BaseActivity;
 import com.liuxd.firstblood.util.ImageLoadUtil;
 
@@ -43,22 +49,83 @@ public class NewsDetailsActivity extends BaseActivity {
 
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
-        String mUrl = getIntent().getStringExtra("url");
-        mIvNews.setTransitionName("transition_news_img");
-        ImageLoadUtil.getInstance().load(this, getIntent().getStringExtra("imageUrl"), mIvNews);
+        String mUrl = getIntent().getStringExtra(Constant.BundleName.URL_NEWS);
+        mIvNews.setTransitionName(Constant.Parameters.TRANSITION_NEWS_IMG);
+        ImageLoadUtil.getInstance().load(this, getIntent().getStringExtra(Constant.BundleName.URL_IMAGE_NEWS), mIvNews);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbarLayout.setTitle(getIntent().getStringExtra("title"));
+        mToolbarLayout.setTitle(getIntent().getStringExtra(Constant.BundleName.TITLE_NEWS));
         WebSettings settings = mWvNews.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setAppCacheEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
-//        mWvNews.setWebChromeClient(new ChromeClient());
-//        mWvNews.setWebViewClient(new LoveClient());
+        mWvNews.setWebChromeClient(new MyWebChromeClient());
+        mWvNews.setWebViewClient(new MyWebViewClient());
 
         mWvNews.loadUrl(mUrl);
     }
 
+    private class MyWebChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            if (mProgressBarNews != null) {
+                mProgressBarNews.setVisibility(newProgress == 100 ? View.GONE : View.VISIBLE);
+                mProgressBarNews.setProgress(newProgress);
+            }
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            mToolbarLayout.setTitle(title);
+        }
+    }
+
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if (request.getUrl() != null) view.loadUrl(request.getUrl().toString());
+            return true;
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (mWvNews.canGoBack()) {
+                        mWvNews.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mWvNews != null)
+            mWvNews.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mWvNews != null)
+            mWvNews.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mWvNews != null)
+            mWvNews.destroy();
+    }
 }

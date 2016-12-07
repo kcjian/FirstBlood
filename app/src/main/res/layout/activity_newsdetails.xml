@@ -57,7 +57,8 @@
                 android:id="@+id/progressBar_news"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="2dp"
+                android:progressDrawable="@drawable/drawable_progressbar"/>
 
             <WebView
                 android:id="@+id/wv_news"

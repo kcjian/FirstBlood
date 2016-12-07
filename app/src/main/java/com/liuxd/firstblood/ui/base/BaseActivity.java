@@ -137,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBase {
     protected void onDestroy() {
         super.onDestroy();
         AppManager.getInstance().removeActivity(this);
-        mUnbinder.unbind();
+        if (mUnbinder != Unbinder.EMPTY) mUnbinder.unbind();
         if (mCompositeSubscription != null)
             mCompositeSubscription.unsubscribe();
         LogUtil.d(TAG, "onDestroy");
