@@ -11,28 +11,28 @@ import java.util.List;
  * 通用的 PagerAdapter
  */
 
-public class CommonPagerAdapter<T extends Fragment> extends FragmentPagerAdapter {
-    private String[] mTypes;
-    private List<T> mFragments;
+public class CommonPagerAdapter extends FragmentPagerAdapter {
+    private String[] mTitles;
+    private List<Fragment> mFragments;
 
-    public CommonPagerAdapter(FragmentManager fm, List<T> fragments, String[] types) {
+    public CommonPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] titles) {
         super(fm);
         this.mFragments = fragments;
-        this.mTypes = types;
+        this.mTitles = titles;
     }
 
     @Override
-    public T getItem(int position) {
+    public Fragment getItem(int position) {
         return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return mTypes.length;
+        return mTitles.length;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTypes[position];
+        return mTitles[position];
     }
 }

@@ -95,7 +95,7 @@ public class HomeActivity extends BaseActivity {
         fragments = new SparseArray<>();
         fragments.put(0, new NewsFragment());
         fragments.put(1, new JokeListFragment());
-        fragments.put(2, new CardNoSearchFragment());
+        fragments.put(2, new IdCardFragment());
         fragments.put(3, new RobotFragment());
         manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

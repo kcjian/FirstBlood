@@ -7,9 +7,11 @@ import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.liuxd.firstblood.R;
 import com.liuxd.firstblood.widget.NoDoubleClickListener;
@@ -40,7 +42,7 @@ public class MultiStatusView extends FrameLayout {
     private static final String TAG_CONTENT = "tag_content_view";
 
     private List<View> mViews = new ArrayList<>();
-    ;
+
     private LayoutInflater mLayoutInflater;
 
     private Context mContext;
@@ -72,13 +74,23 @@ public class MultiStatusView extends FrameLayout {
     }
 
     @Override
-    public void addView(View child) {
-        super.addView(child);
+    public void addView(View child, int index, ViewGroup.LayoutParams params) {
+        super.addView(child, index, params);
         if (child.getTag() == null || (!child.getTag().equals(TAG_LOADING) &&
                 !child.getTag().equals(TAG_EMPTY) && !child.getTag().equals(TAG_ERROR))
                 && !child.getTag().equals(TAG_NO_NETWORK)) {
             child.setTag(TAG_CONTENT);
             mViews.add(child);
+        }
+    }
+
+    /**
+     * 第一次显示时不显示ContentView
+     */
+    public void setContentGoneFirst() {
+        for (int i = 0; i < mViews.size(); i++) {
+            View v = mViews.get(i);
+            v.setVisibility(GONE);
         }
     }
 
@@ -99,12 +111,11 @@ public class MultiStatusView extends FrameLayout {
             mEmptyView.setTag(TAG_EMPTY);
             addView(mEmptyView);
             mViews.add(mEmptyView);
-        } else {
-            showView(TAG_EMPTY);
         }
+        showView(TAG_EMPTY);
     }
 
-    public void showError() {
+    public void showError(String... errorMsg) {
         if (mErrorView == null) {
             mErrorView = (LinearLayout) mLayoutInflater.inflate(mErrorViewResId, null)
                     .findViewById(R.id.errorViewLayout);
@@ -119,12 +130,13 @@ public class MultiStatusView extends FrameLayout {
                     }
                 });
             }
+            TextView tv_errorMsg = (TextView) mErrorView.findViewById(R.id.tv_errorMsg);
+            tv_errorMsg.setText(errorMsg.length > 0 ? errorMsg[0] : mContext.getString(R.string.load_error));
             mErrorView.setTag(TAG_ERROR);
             addView(mErrorView);
             mViews.add(mErrorView);
-        } else {
-            showView(TAG_ERROR);
         }
+        showView(TAG_ERROR);
     }
 
     public void showNoNetwork() {
@@ -142,9 +154,8 @@ public class MultiStatusView extends FrameLayout {
             mNoNetworkView.setTag(TAG_NO_NETWORK);
             addView(mNoNetworkView);
             mViews.add(mNoNetworkView);
-        } else {
-            showView(TAG_NO_NETWORK);
         }
+        showView(TAG_NO_NETWORK);
     }
 
     public void showLoading() {
@@ -154,9 +165,8 @@ public class MultiStatusView extends FrameLayout {
             mLoadingView.setTag(TAG_LOADING);
             addView(mLoadingView);
             mViews.add(mLoadingView);
-        } else {
-            showView(TAG_LOADING);
         }
+        showView(TAG_LOADING);
     }
 
     public void showContent() {

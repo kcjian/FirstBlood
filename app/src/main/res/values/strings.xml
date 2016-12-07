@@ -30,6 +30,19 @@
         <item>caijing</item>
         <item>shishang</item>
     </string-array>
+    <!--身份证-->
+    <array name="array_idCard">
+        <item>身份证号查询</item>
+        <item>泄漏查询</item>
+        <item>挂失查询</item>
+    </array>
+    <string name="idCardNo">身份证号：</string>
+    <string name="area">地区：</string>
+    <string name="sex">性别：</string>
+    <string name="birthday">出生日期：</string>
+    <!--Common-->
+    <string name="search">查询</string>
+    <string name="searchResult">查询结果</string>
     <!--other-->
     <string name="loading">拼命加载中&#8230;</string>
     <string name="load_error">网络请求失败</string>

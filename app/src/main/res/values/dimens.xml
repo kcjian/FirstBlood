@@ -41,19 +41,8 @@
     <dimen name="margin_smaller">8dp</dimen>
     <dimen name="margin_tiny">5dp</dimen>
 
-    <dimen name="loading_side">40dp</dimen>
-    <dimen name="logo_size">140dp</dimen>
-    <dimen name="ring_width_thin">1dp</dimen>
-    <dimen name="ring_size">100dp</dimen>
-    <dimen name="ring_main1_size">280dp</dimen>
-    <dimen name="ring_main2_size">190dp</dimen>
-    <dimen name="ring_btn_size">70dp</dimen>
-    <dimen name="ring_btn_marT">250dp</dimen>
-    <dimen name="ring_btn_marT2">180dp</dimen>
-    <dimen name="ring_btn_marL">120dp</dimen>
-    <dimen name="circleView_size">45dp</dimen>
-    <dimen name="size_tv_brightness">90dp</dimen>
-    <dimen name="size_item_scene_border">1dp</dimen>
-
+    <!--size-->
+    <dimen name="height_btn">36dp</dimen>
+    <dimen name="height_group">30dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
 </resources>

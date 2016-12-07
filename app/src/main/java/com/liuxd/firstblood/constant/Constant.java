@@ -7,6 +7,7 @@ package com.liuxd.firstblood.constant;
 
 public class Constant {
     public static final String BASE_URL = "http://v.juhe.cn/";
+    public static final String BASE_API_URL = "http://apis.juhe.cn/";
 
     /**
      * Handler编码

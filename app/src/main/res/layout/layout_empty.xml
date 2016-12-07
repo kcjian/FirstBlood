@@ -17,5 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
+        android:background="@null"
+        android:textColor="@color/blue"
         android:text="@string/data_load"/>
 </LinearLayout>

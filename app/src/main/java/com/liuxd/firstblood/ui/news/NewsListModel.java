@@ -2,7 +2,6 @@ package com.liuxd.firstblood.ui.news;
 
 import com.liuxd.firstblood.entity.News;
 import com.liuxd.firstblood.network.HttpUtil;
-import com.liuxd.firstblood.ui.base.BaseSubscriber;
 
 import rx.Subscriber;
 import rx.subscriptions.CompositeSubscription;
@@ -23,7 +22,7 @@ public class NewsListModel implements NewsListContract.Model {
 
     @Override
     public void loadNews(String type) {
-        Subscriber<News> mSubscriber = new BaseSubscriber<News>() {
+        Subscriber<News> mSubscriber = new Subscriber<News>() {
             @Override
             public void onCompleted() {
 

@@ -3,6 +3,7 @@ package com.liuxd.firstblood.ui.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.liuxd.firstblood.R;
@@ -31,7 +32,7 @@ public class NewsFragment extends BaseFragment {
     @BindArray(R.array.news_type_id)
     String[] mTypeIds;
 
-    private List<NewsListFragment> fragments;
+    private List<Fragment> fragments;
 
     @Override
     public int setLayoutId() {
@@ -41,8 +42,7 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
         initFragments();
-        CommonPagerAdapter<NewsListFragment> adapter = new CommonPagerAdapter<>(
-                getChildFragmentManager(), fragments, mTypes);
+        CommonPagerAdapter adapter = new CommonPagerAdapter(getChildFragmentManager(), fragments, mTypes);
         mVpNews.setOffscreenPageLimit(3);
         mVpNews.setAdapter(adapter);
         mTabNewsType.setupWithViewPager(mVpNews);
